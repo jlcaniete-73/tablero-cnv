@@ -18,7 +18,7 @@
       --accent2: #7c5cfc;
       --text: #1a1f36;
       --muted: #7a85a3;
-      --card-w: 340px;
+      --error: #e53e3e;
     }
 
     html, body {
@@ -29,6 +29,109 @@
       overflow: hidden;
     }
 
+    /* ── LOGIN ── */
+    #login-screen {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .35s ease, transform .35s ease;
+    }
+
+    #login-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-18px);
+    }
+
+    .login-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 8px 32px rgba(59,111,240,0.08);
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-logo .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .login-logo h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 6px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent);
+    }
+
+    .error-msg {
+      font-size: 13px;
+      color: var(--error);
+      text-align: center;
+      margin-bottom: 14px;
+      min-height: 18px;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+    }
+
+    .login-btn:hover { background: #2d5fd4; }
+    .login-btn:active { transform: scale(.98); }
+    .login-btn:disabled { background: var(--muted); cursor: not-allowed; }
+
     /* ── MENU ── */
     #menu {
       height: 100vh;
@@ -36,7 +139,18 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      position: fixed;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(18px);
       transition: opacity .35s ease, transform .35s ease;
+    }
+
+    #menu.visible {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
     }
 
     #menu.hidden {
@@ -63,7 +177,6 @@
       font-family: 'DM Serif Display', serif;
       font-size: clamp(26px, 4vw, 40px);
       font-weight: 400;
-      line-height: 1.15;
       color: var(--text);
     }
 
@@ -74,6 +187,23 @@
       font-weight: 300;
     }
 
+    .logout-btn {
+      position: fixed;
+      top: 18px;
+      right: 20px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      padding: 5px 12px;
+      cursor: pointer;
+      transition: border-color .2s, color .2s;
+    }
+
+    .logout-btn:hover { border-color: var(--border-hover); color: var(--text); }
+
     .cards {
       display: flex;
       gap: 24px;
@@ -82,14 +212,13 @@
     }
 
     .card {
-      width: var(--card-w);
+      width: 340px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 18px;
       overflow: hidden;
       cursor: pointer;
       transition: border-color .25s, transform .25s, box-shadow .25s;
-      display: block;
     }
 
     .card:hover {
@@ -108,15 +237,9 @@
       overflow: hidden;
     }
 
-    .card:nth-child(1) .card-preview {
-      background: linear-gradient(135deg, #dce8ff 0%, #eef3ff 100%);
-    }
+    .card:nth-child(1) .card-preview { background: linear-gradient(135deg, #dce8ff 0%, #eef3ff 100%); }
+    .card:nth-child(2) .card-preview { background: linear-gradient(135deg, #e4dcff 0%, #f0eeff 100%); }
 
-    .card:nth-child(2) .card-preview {
-      background: linear-gradient(135deg, #e4dcff 0%, #f0eeff 100%);
-    }
-
-    /* grid lines */
     .card-preview::before {
       content: '';
       position: absolute;
@@ -138,16 +261,8 @@
       justify-content: center;
     }
 
-    .card:nth-child(1) .preview-icon {
-      background: rgba(59,111,240,0.12);
-      border: 1px solid rgba(59,111,240,0.20);
-    }
-
-    .card:nth-child(2) .preview-icon {
-      background: rgba(124,92,252,0.12);
-      border: 1px solid rgba(124,92,252,0.20);
-    }
-
+    .card:nth-child(1) .preview-icon { background: rgba(59,111,240,0.12); border: 1px solid rgba(59,111,240,0.20); }
+    .card:nth-child(2) .preview-icon { background: rgba(124,92,252,0.12); border: 1px solid rgba(124,92,252,0.20); }
     .preview-icon svg { width: 28px; height: 28px; }
     .card:nth-child(1) .preview-icon svg { color: #3b6ff0; }
     .card:nth-child(2) .preview-icon svg { color: #7c5cfc; }
@@ -165,11 +280,7 @@
       opacity: .30;
     }
 
-    .mini-bar {
-      flex: 1;
-      border-radius: 3px 3px 0 0;
-    }
-
+    .mini-bar { flex: 1; border-radius: 3px 3px 0 0; }
     .card:nth-child(1) .mini-bar { background: #3b6ff0; }
     .card:nth-child(2) .mini-bar { background: #7c5cfc; }
 
@@ -189,20 +300,8 @@
     .card:nth-child(1) .card-tag { color: #3b6ff0; }
     .card:nth-child(2) .card-tag { color: #7c5cfc; }
 
-    .card-title {
-      font-size: 16px;
-      font-weight: 500;
-      margin-bottom: 6px;
-      line-height: 1.3;
-      color: var(--text);
-    }
-
-    .card-desc {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 300;
-      line-height: 1.5;
-    }
+    .card-title { font-size: 16px; font-weight: 500; margin-bottom: 6px; line-height: 1.3; color: var(--text); }
+    .card-desc { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.5; }
 
     .card-arrow {
       margin-top: 16px;
@@ -215,13 +314,7 @@
 
     .card:nth-child(1) .card-arrow { color: #3b6ff0; }
     .card:nth-child(2) .card-arrow { color: #7c5cfc; }
-
-    .card-arrow svg {
-      width: 14px;
-      height: 14px;
-      transition: transform .2s;
-    }
-
+    .card-arrow svg { width: 14px; height: 14px; transition: transform .2s; }
     .card:hover .card-arrow svg { transform: translateX(3px); }
 
     /* ── VIEWER ── */
@@ -261,7 +354,6 @@
       color: var(--muted);
       font-family: 'DM Sans', sans-serif;
       font-size: 13px;
-      font-weight: 400;
       padding: 5px 13px 5px 9px;
       cursor: pointer;
       display: flex;
@@ -270,47 +362,47 @@
       transition: border-color .2s, color .2s;
     }
 
-    .back-btn:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
+    .back-btn:hover { border-color: var(--accent); color: var(--accent); }
     .back-btn svg { width: 14px; height: 14px; }
 
-    .viewer-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .viewer-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    #viewer-title { font-size: 13px; font-weight: 500; color: var(--muted); }
 
-    #viewer-title {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-    }
-
-    #dashboard-frame {
-      flex: 1;
-      width: 100%;
-      border: none;
-      display: block;
-    }
+    #dashboard-frame { flex: 1; width: 100%; border: none; display: block; }
   </style>
 </head>
 <body>
 
+  <!-- LOGIN -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">
+        <div class="eyebrow">DICEI · Datos</div>
+        <h1>Tableros Datos Dicei</h1>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email-input" placeholder="usuario@ejemplo.com" />
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="password-input" placeholder="••••••••" />
+      </div>
+      <div class="error-msg" id="error-msg"></div>
+      <button class="login-btn" id="login-btn" onclick="doLogin()">Ingresar</button>
+    </div>
+  </div>
+
   <!-- MENU -->
   <div id="menu">
+    <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
     <div class="menu-header">
       <div class="eyebrow">DICEI · Datos</div>
       <h1>Tableros Datos Dicei</h1>
       <p>Seleccioná un tablero para continuar</p>
     </div>
-
     <div class="cards">
 
-      <!-- CARD 1 -->
       <div class="card" onclick="openDashboard(0)">
         <div class="card-preview">
           <div class="preview-icon">
@@ -341,7 +433,6 @@
         </div>
       </div>
 
-      <!-- CARD 2 -->
       <div class="card" onclick="openDashboard(1)">
         <div class="card-preview">
           <div class="preview-icon">
@@ -395,21 +486,71 @@
       {
         title: "Monitor CNV",
         color: "#3b6ff0",
-        url: "https://app.powerbi.com/view?r=eyJrIjoiOWRkMzU1NTEtY2RiZS00Y2VmLWFkYjEtZWRmYWU5NWQ2ODhiIiwidCI6IjFiOWZhM2ViLTQ1MDYtNGVhOS1hODQ1LTk1MWQ2ZDg2MmQ3NiIsImMiOjR9"
+        url: "PEGAR_URL_EMBED_TABLERO_CNV_AQUI"
       },
       {
         title: "Monitor Campaña ATG",
         color: "#7c5cfc",
-        url: "https://app.powerbi.com/view?r=eyJrIjoiZGJlYzJjZDMtNDFjNS00NDc2LThkYjEtZGE1MTI0ZjBiOTA3IiwidCI6IjFiOWZhM2ViLTQ1MDYtNGVhOS1hODQ1LTk1MWQ2ZDg2MmQ3NiIsImMiOjR9"
+        url: "PEGAR_URL_EMBED_TABLERO_ATG_AQUI"
       }
     ];
     // ═══════════════════════════════════════════
 
-    const menu   = document.getElementById('menu');
-    const viewer = document.getElementById('viewer');
-    const frame  = document.getElementById('dashboard-frame');
-    const vtitle = document.getElementById('viewer-title');
-    const vdot   = document.getElementById('viewer-dot');
+    const loginScreen = document.getElementById('login-screen');
+    const menu        = document.getElementById('menu');
+    const viewer      = document.getElementById('viewer');
+    const frame       = document.getElementById('dashboard-frame');
+    const vtitle      = document.getElementById('viewer-title');
+    const vdot        = document.getElementById('viewer-dot');
+    const errorMsg    = document.getElementById('error-msg');
+    const loginBtn    = document.getElementById('login-btn');
+
+    // Enter key en el formulario
+    document.getElementById('password-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+
+    async function doLogin() {
+      const email    = document.getElementById('email-input').value.trim();
+      const password = document.getElementById('password-input').value;
+      errorMsg.textContent = '';
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Ingresando...';
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorMsg.textContent = 'Email o contraseña incorrectos';
+          loginBtn.disabled = false;
+          loginBtn.textContent = 'Ingresar';
+          return;
+        }
+
+        sessionStorage.setItem('auth_token', data.access_token);
+        loginScreen.classList.add('hidden');
+        menu.classList.add('visible');
+
+      } catch (err) {
+        errorMsg.textContent = 'Error de conexión, intentá de nuevo';
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Ingresar';
+      }
+    }
+
+    function doLogout() {
+      sessionStorage.removeItem('auth_token');
+      menu.classList.remove('visible');
+      loginScreen.classList.remove('hidden');
+      document.getElementById('email-input').value = '';
+      document.getElementById('password-input').value = '';
+    }
 
     function openDashboard(i) {
       const d = dashboards[i];
@@ -424,6 +565,12 @@
       viewer.classList.remove('visible');
       menu.classList.remove('hidden');
       setTimeout(() => { frame.src = ''; }, 400);
+    }
+
+    // Si ya hay sesión activa, saltar el login
+    if (sessionStorage.getItem('auth_token')) {
+      loginScreen.classList.add('hidden');
+      menu.classList.add('visible');
     }
   </script>
 
