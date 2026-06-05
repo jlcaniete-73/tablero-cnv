@@ -545,12 +545,15 @@
     }
 
     function doLogout() {
-      sessionStorage.removeItem('auth_token');
-      menu.classList.remove('visible');
-      loginScreen.classList.remove('hidden');
-      document.getElementById('email-input').value = '';
-      document.getElementById('password-input').value = '';
-    }
+        sessionStorage.removeItem('auth_token');
+        menu.classList.remove('visible');
+        loginScreen.classList.remove('hidden');
+        document.getElementById('email-input').value = '';
+        document.getElementById('password-input').value = '';
+        errorMsg.textContent = '';
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Ingresar';
+      }
 
     function openDashboard(i) {
       const d = dashboards[i];
